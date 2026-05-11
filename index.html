@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda: Abigail & Jovanny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root { 
+            --oro-viejo: #c5a059;
+            --plata-brillante: #e5e7e9;
+            --azul-floral: #1a3a5a;
+            --azul-oscuro: #050c14;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: white;
+        }
+
+        /* FONDO: FLORES AZULES Y PLATEADAS */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* REEMPLAZA EL LINK DE ABAJO POR EL LINK DIRECTO DE LA IMAGEN DE FREEPIK SI TIENES UNO ESPECÍFICO */
+            background-image: url('https://img.freepik.com/foto-gratis/fondo-floral-azul-plata-elegante_23-2150915153.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) contrast(1.1);
+            z-index: -1;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .card {
+            position: relative;
+            max-width: 480px;
+            width: 100%;
+            background: rgba(5, 12, 20, 0.85); /* Fondo oscuro semitransparente para legibilidad */
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--plata-brillante);
+            padding: 50px 25px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+        }
+
+        /* ORNAMENTOS PLATEADOS */
+        .card::before, .card::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b3/Decorative_corner_flourish.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: invert(95%) sepia(5%) saturate(10%) hue-rotate(180deg); /* Color Plata */
+            opacity: 0.6;
+        }
+        .card::before { top: 15px; left: 15px; }
+        .card::after { bottom: 15px; right: 15px; transform: rotate(180deg); }
+
+        h2 { 
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            color: var(--plata-brillante);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin: 5px 0;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .ampersand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--oro-viejo);
+            margin: 10px 0;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            font-family: 'Cinzel', serif;
+        }
+        .time-box { text-align: center; min-width: 60px; }
+        .time-box span { font-size: 1.4rem; display: block; color: var(--plata-brillante); font-weight: bold; }
+        .time-label { font-size: 0.5rem; letter-spacing: 1px; color: var(--oro-viejo); }
+
+        .info-boda {
+            border-top: 1px solid rgba(229, 231, 233, 0.3);
+            border-bottom: 1px solid rgba(229, 231, 233, 0.3);
+            margin: 25px 0;
+            padding: 20px 0;
+            font-weight: 300;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .pases-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px double var(--plata-brillante);
+        }
+
+        .num-pases {
+            display: block;
+            font-size: 3.5rem;
+            font-family: 'Cinzel', serif;
+            color: var(--plata-brillante);
+            margin: 5px 0;
+        }
+
+        .qr-group {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .qr-item { flex: 1; text-align: center; }
+        .qr-frame {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .qr-label {
+            font-size: 0.55rem;
+            letter-spacing: 1px;
+            color: var(--plata-brillante);
+            text-transform: uppercase;
+        }
+
+        .btn-confirm {
+            display: block;
+            background: transparent;
+            border: 1px solid var(--plata-brillante);
+            color: var(--plata-brillante);
+            padding: 16px;
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        .btn-confirm:hover {
+            background: var(--plata-brillante);
+            color: var(--azul-oscuro);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-fixed"></div>
+
+    <audio id="audioNature" loop>
+        <source src="https://www.soundjay.com/nature/sounds/forest-birds-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="main-container">
+        <div class="card">
+            <h2>NUESTRA BODA</h2>
+            
+            <h1>ISABEL ABIGAIL SEGURA NAVA</h1>
+            <div class="ampersand">&</div>
+            <h1>CESAR JOVANNY VILLEGAS PICHARDO</h1>
+
+            <div class="countdown" id="timer">
+                <div class="time-box"><span id="days">00</span><div class="time-label">DÍAS</div></div>
+                <div class="time-box"><span id="hours">00</span><div class="time-label">HRS</div></div>
+                <div class="time-box"><span id="minutes">00</span><div class="time-label">MIN</div></div>
+                <div class="time-box"><span id="seconds">00</span><div class="time-label">SEG</div></div>
+            </div>
+
+            <div class="info-boda">
+                <strong>SABADO, 07 DE NOVIEMBRE, 2026 • LA CEREMONIA SE LLEVARA A CABO A LAS 17:00 HRS</strong><br><br>
+                📍 JARDÍN DE EVENTOS LUMINARIA<br>
+                <small style="font-size: 0.7rem;">CALLE ECOLOGÍA, EJIDO SAN MATEO COAPEXCO</small>
+            </div>
+
+            <div class="pases-box">
+                <span style="font-size: 0.6rem; letter-spacing: 3px;">HOLA, <span id="guest-name">INVITADO</span></span>
+                <p style="margin: 10px 0; font-size: 0.7rem;">HEMOS RESERVADO PARA TI:</p>
+                <span class="num-pases" id="passes-count">0</span>
+                <p style="font-size: 0.6rem; letter-spacing: 2px; margin: 0;">PASES PERSONALES</p>
+            </div>
+
+            <div class="qr-group">
+                <div class="qr-item">
+                    <div class="qr-frame" id="qrcode-wa"></div>
+                    <div class="qr-label">Confirmar<br>Asistencia</div>
+                </div>
+                <div class="qr-item">
+                    <div class="qr-frame" id="qrcode-map"></div>
+                    <div class="qr-label">Ubicación<br>del Jardín</div>
+                </div>
+            </div>
+
+            <a id="wa-btn" href="#" class="btn-confirm" onclick="startExperience()">
+                CONFIRMAR ASISTENCIA
+            </a>
+            
+            <p style="font-size: 0.5rem; color: var(--plata-brillante); margin-top: 20px; opacity: 0.7;">
+                TOCA PARA CONFIRMAR Y ACTIVAR SONIDO AMBIENTAL
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const weddingDate = new Date("Nov 7, 2026 17:00:00").getTime();
+        const googleMapsUrl = "https://maps.app.goo.gl/yehKvNNS6xBfxVAn8"; 
+
+        function startExperience() {
+            document.getElementById("audioNature").play().catch(e => console.log("Audio interactivo"));
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("days").innerText = d < 10 ? "0"+d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0"+h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0"+m : m;
+            document.getElementById("seconds").innerText = s < 10 ? "0"+s : s;
+        }
+
+        function setup() {
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('n') || "Invitado Especial";
+            const passes = params.get('p') || "4";
+
+            document.getElementById('guest-name').innerText = name.replace(/_/g, ' ').toUpperCase();
+            document.getElementById('passes-count').innerText = passes;
+
+            const msg = `¡Hola! Confirmo mi asistencia para la boda de Abigail y Jovanny. Familia: ${name} (${passes} pases).`;
+            const waLink = `https://wa.me/7227897998?text=${encodeURIComponent(msg)}`;
+            document.getElementById('wa-btn').href = waLink;
+
+            new QRCode(document.getElementById("qrcode-wa"), {
+                text: waLink,
+                width: 110,
+                height: 110,
+                colorDark : "#050c14",
+                colorLight : "#ffffff"
+            });
+
+            new QRCode(document.getElementById("qrcode-map"), {
+                text: googleMapsUrl,
+                width: 110,
+                height: 110,
+                colorDark : "#050c14",
+                colorLight : "#ffffff"
+            });
+        }
+
+        window.onload = setup;
+        document.body.addEventListener('click', startExperience, { once: true });
+    </script>
+</body>
+</html>
