@@ -265,7 +265,7 @@
             document.getElementById('guest-name').innerText = name.replace(/_/g, ' ').toUpperCase();
             document.getElementById('passes-count').innerText = passes;
 
-            const msg = `¡Hola! Confirmo asistencia para la boda de Abigail y Jovanny. Familia: ${name} (${passes} pases).`;
+            const msg = `¡Hola! Confirmo asistencia para la boda de Abigail y Jovanny. Familia: ${name} (${passes} pases).La asistencia de () pesonas`;
             const waLink = `https://wa.me/7227897998?text=${encodeURIComponent(msg)}`;
             document.getElementById('wa-btn').href = waLink;
 
